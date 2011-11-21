@@ -1,4 +1,4 @@
-#!/usr/bin/python 
+#!/usr/bin/python
 
 import datetime
 import time
@@ -19,7 +19,7 @@ A very simple script to rank contestants at the Minimum Plauschwettkampf
 
 grades_color = { '0' : '0xfff000', '1' : '0x00ff30', '2' : '0xff4e00', '3' : '0x0006ff', '4' : '0xff0000', '5' : '0xffffff' }
 grades_abbrev = [ 'Ge:', 'Gr:', 'Or:', 'Bl:', 'Ro:', 'We:' ]
-grade_mapping = [-1,2,1,0,2,3,1,5,3,3,1,1,2,1,0,2,1,3,4,2,3,0,3,2,0,2,3,2,4,2,0,1,1,3,4,5,2,1,3,2,3,0,2,1,2,3,5,5,4,1,1]
+grade_mapping = [-1,2,0,1,2,3,1,5,2,3,1,2,1,1,0,3,1,2,4,2,3,0,4,2,1,2,3,2,4,2,0,1,1,3,4,5,3,2,3,1,3,0,1,2,2,3,4,5,4,2,1]
 
 # parameters
 numFinalists = 4
@@ -130,8 +130,8 @@ def plotGrades(data):
             for boulder in boulders:
                 bgrade[grade_mapping[int(boulder)]] = bgrade[grade_mapping[int(boulder)]] + 1
 
-    mean_ascends_grade = map(lambda x: round(float(x)*100.0/(len(data)*grade_mapping.count(bgrade.index(x))),2), bgrade) 
-    
+    mean_ascends_grade = map(lambda x: round(float(x)*100.0/(len(data)*grade_mapping.count(bgrade.index(x))),2), bgrade)
+
     print(mean_ascends_grade)
     print("")
 
@@ -155,7 +155,7 @@ def printRanking(ranking):
         if i==(numFinalists-1): print("------------------------------")
 
     print("")
-    
+
 
 """
 main method
@@ -163,7 +163,7 @@ main method
 def main(argv):
     results = getResults()
     (maleRanking, femaleRanking) = map(lambda x: compileRanking(x), results)
-   
+
     printRanking(maleRanking)
     printRanking(femaleRanking)
 
@@ -172,13 +172,13 @@ def main(argv):
     names = map(lambda x: str(maleRanking.index(x)+1) + ": " + x[0], maleRanking)
     plotRanking(barsm, names, "Ranking M", "male")
     barsm.reverse()
-    
+
     max = femaleRanking[0][2]
     barsf = map(lambda x: round(x[2]*100/max,0), femaleRanking)
     names = map(lambda x: str(femaleRanking.index(x)+1) + ": " + x[0], femaleRanking)
     plotRanking(barsf, names, "Ranking F", "female")
     barsf.reverse()
-    
+
     plotGrades(results[0]+results[1])
 
     htmlfile = "results.html"
