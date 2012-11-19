@@ -19,7 +19,8 @@ A very simple script to rank contestants at the Minimum Plauschwettkampf
 
 grades_color = { '0' : '0xfff000', '1' : '0x00ff30', '2' : '0xff4e00', '3' : '0x0006ff', '4' : '0xff0000', '5' : '0xffffff' }
 grades_abbrev = [ 'Ge:', 'Gr:', 'Or:', 'Bl:', 'Ro:', 'We:' ]
-grade_mapping = [-1,2,0,1,2,3,1,5,2,3,1,2,1,1,0,3,1,2,4,2,3,0,4,2,1,2,3,2,4,2,0,1,1,3,4,5,3,2,3,1,3,0,1,2,2,3,4,5,4,2,1]
+grade_mapping = [-1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5]
+
 
 # parameters
 numFinalists = 4
@@ -30,7 +31,7 @@ totalPointsPerBoulder = 100.0
 read results
 """
 def getResults():
-    f = open("data/results")
+    f = open("data/results_12")
     results_m = []
     results_w = []
     while f:
