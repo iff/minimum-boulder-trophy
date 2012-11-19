@@ -56,7 +56,12 @@ def compileRanking(results):
         if not res[2] == "":
             boulders = res[2].split(",")
             for boulder in boulders:
-                bpoints[int(boulder)] = bpoints[int(boulder)] + 1
+                if boulder.find('-') == -1:
+                    bpoints[int(boulder)] = bpoints[int(boulder)] + 1
+                else:
+                    fromto = boulder.split('-')
+                    for i in range(int(fromto[0]), int(fromto[1])+1):
+                        bpoints[i] = bpoints[i] + 1
 
     for i in range(0, len(bpoints)):
         if bpoints[i] > 0:
@@ -68,7 +73,12 @@ def compileRanking(results):
         points = 0.0
         if not res[2] == "":
             for boulder in boulders:
-                points = points + bpoints[int(boulder)]
+                if boulder.find('-') == -1:
+                    points = points + bpoints[int(boulder)]
+                else:
+                    fromto = boulder.split('-')
+                    for i in range(int(fromto[0]), int(fromto[1])+1):
+                        points = points + bpoints[i]
         ranking.append([res[0], res[1], points])
 
     ranking = sorted(ranking, key=lambda x: x[2], reverse=True)
@@ -94,7 +104,7 @@ def plotRanking(bars, names, title, filename):
     golden_mean = (math.sqrt(5)-1.0)/2.0    # Aesthetic ratio
     fig_width = fig_width_pt*inches_per_pt  # width in inches
     fig_height = fig_width*golden_mean      # height in inches
-    fig_size =  [fig_width,fig_height]
+    fig_size =  [fig_width, fig_height]
     params = {'backend': 'ps',
               'axes.labelsize': 10,
               'text.fontsize': 10,
@@ -108,7 +118,7 @@ def plotRanking(bars, names, title, filename):
     xlocations = numpy.array(range(len(bars))) + 0.5
     height = 0.5
     fig = pylab.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     ax.barh(xlocations, bars, height=height, color=colors)
     ax.xaxis.grid(color='gray', linestyle='dashed')
     plt.yticks(xlocations + height/2, names)
@@ -129,7 +139,12 @@ def plotGrades(data):
         if not res[2] == "":
             boulders = res[2].split(",")
             for boulder in boulders:
-                bgrade[grade_mapping[int(boulder)]] = bgrade[grade_mapping[int(boulder)]] + 1
+                if boulder.find('-') == -1:
+                    bgrade[grade_mapping[int(boulder)]] = bgrade[grade_mapping[int(boulder)]] + 1
+                else:
+                    fromto = boulder.split('-')
+                    for i in range(int(fromto[0]), int(fromto[1])+1):
+                        bgrade[grade_mapping[i]] = bgrade[grade_mapping[i]] + 1
 
     mean_ascends_grade = map(lambda x: round(float(x)*100.0/(len(data)*grade_mapping.count(bgrade.index(x))),2), bgrade)
 
@@ -140,7 +155,7 @@ def plotGrades(data):
     width = 0.5
     plt.clf()
     fig = pylab.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     ax.bar(xlocations, mean_ascends_grade, width=width, color=['#fff000','#00ff30','#ff4e00','#0006ff','#ff0000','#ffffff'])
     ax.yaxis.grid(color='gray', linestyle='dashed')
     plt.xticks(xlocations + width/2, ["gelb", "gruen", "orange", "blau", "rot", "weiss"])
